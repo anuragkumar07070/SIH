@@ -1,6 +1,9 @@
+import { LogIn } from 'lucide-react';
 import MapComponent from './Map/MapComponent';
 import Navbar from './Navbar/Navbar';
 import ProblemsComponent from './Problems/ProblemComponent';
+import SignUpPage from './User/SignUpPage';
+import LoginPage from './User/LoginPage';
 
 const Dashboard = () => {
   return (
