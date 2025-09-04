@@ -1,0 +1,31 @@
+/* MapComponent.css */
+.map-container {
+  width: 100%;
+  height: 100%;
+  min-height: 400px; /* Fallback minimum height */
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.map-content {
+  flex: 1;
+  position: relative;
+  min-height: 400px;
+}
+
+/* Override any conflicting styles */
+.maplibregl-map {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.maplibregl-canvas-container,
+.maplibregl-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

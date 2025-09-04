@@ -1,15 +1,17 @@
+// src/Components/Dashboard.jsx
 import MapComponent from './Map/MapComponent';
 import Navbar from './Navbar/Navbar';
 import ProblemsComponent from './Problems/ProblemComponent';
 
-const Dashboard = () => {
+// Accept signOut and user as props
+const Dashboard = ({ signOut, user }) => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <Navbar/>
+      {/* Pass the props down to the Navbar */}
+      <Navbar user={user} signOut={signOut} />
       
       {/* Main Content */}
-      <div className="flex h-[calc(100vh-80px)] p-6 gap-6">
+      <div className="flex h-[calc(100vh-64px)] p-6 gap-6">
         {/* Map Component - 1/3 width */}
         <div className="w-1/3 min-w-0">
           <MapComponent />
