@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-civicissuedashboard-dev-3da52-authRole",
+      "UnauthRoleArn": "arn:aws:iam::973442309075:role/amplify-civicissuedashboard-dev-3da52-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::973442309075:role/amplify-civicissuedashboard-dev-3da52-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-civicissuedashboard-dev-3da52-deployment",
+      "UnauthRoleName": "amplify-civicissuedashboard-dev-3da52-unauthRole",
+      "StackName": "amplify-civicissuedashboard-dev-3da52",
+      "StackId": "arn:aws:cloudformation:ap-south-1:973442309075:stack/amplify-civicissuedashboard-dev-3da52/dc951070-89c3-11f0-a967-0255a0d0a7d3",
+      "AmplifyAppId": "dlzcllmyhvjil"
+    },
+    "categories": {
+      "auth": {
+        "civicissuedashboard418b6089": {}
+      }
+    }
+  }
+}
