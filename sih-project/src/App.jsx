@@ -6,7 +6,9 @@ import '@aws-amplify/ui-react/styles.css'; // Import the default theme
 
 import Dashboard from './Components/Dashboard';
 import awsExports from './aws-exports'; // The configuration file from Amplify CLI
-
+import LokSamadhanLanding from './Components/LandingPage/LokSamadhanLanding';
+import LoginPage from './Components/User/LoginPage';
+import SignUpPage from './Components/User/SignUpPage';
 // Configure Amplify for your entire app
 Amplify.configure(awsExports);
 
@@ -17,7 +19,9 @@ function App({ signOut, user }) {
       {/* You can pass the user and signOut function to the Dashboard 
         if you need them there, for example, in your Navbar.
       */}
-      <Dashboard user={user} signOut={signOut} />
+      <SignUpPage/>
+      {/* <LokSamadhanLanding/>
+      <Dashboard user={user} signOut={signOut} /> */}
     </>
   );
 }
