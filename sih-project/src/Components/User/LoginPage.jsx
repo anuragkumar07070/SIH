@@ -5,10 +5,6 @@ import { Eye, EyeOff, User, Lock } from 'lucide-react';
 // For demonstration, let's create simple SVG placeholders if lucide-react is not available.
 // In a real project, you would run: npm install lucide-react
 
-// const App = () => {
-//     // This is the main component that will render our LoginPage
-//     return <LoginPage />;
-// };
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -165,7 +161,6 @@ export default function LoginPage() {
               </a>
             </p>
           </div>
-          
         </div>
       </div>
     </div>
