@@ -19,9 +19,8 @@ function App({ signOut, user }) {
       {/* You can pass the user and signOut function to the Dashboard 
         if you need them there, for example, in your Navbar.
       */}
-      <SignUpPage/>
-      {/* <LokSamadhanLanding/>
-      <Dashboard user={user} signOut={signOut} /> */}
+      <LokSamadhanLanding/>
+      {/* <Dashboard user={user} signOut={signOut} /> */}
     </>
   );
 }
