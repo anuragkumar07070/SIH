@@ -1,68 +1,64 @@
-import React from 'react';
-import ProblemCard from './ProblemCard'; // Ensure this path is correct
+// src/components/Problems/ProblemsComponent.jsx
+import React, { useState, useEffect } from 'react';
+import FilterBar from './FilterBar';
+import ProblemList from './ProblemList';
+import ProblemModal from './ProblemModal';
 
-const mockProblems = [
-  {
-    id: 1,
-    title: 'Pothole on Main Street',
-    image: 'https://via.placeholder.com/150',
-    priority: 'High',
-    status: 'Open',
-  },
-  {
-    id: 2,
-    title: 'Broken Streetlight',
-    image: 'https://via.placeholder.com/150',
-    priority: 'Medium',
-    status: 'In Progress',
-  },
-  {
-    id: 3,
-    title: 'Overflowing Garbage Bin',
-    image: 'https://via.placeholder.com/150',
-    priority: 'Low',
-    status: 'Resolved',
-  },
-];
+// This component now receives its data from the Dashboard
+const ProblemsComponent = ({ problems, isLoading, error }) => {
+  const [filteredProblems, setFilteredProblems] = useState(problems);
+  const [selectedProblem, setSelectedProblem] = useState(null);
+  const [filters, setFilters] = useState({
+    search: '',
+    category: 'All Categories',
+    status: 'All Status',
+  });
 
-const ProblemsComponent = () => {
+  // This effect now runs when the main 'problems' prop changes
+  useEffect(() => {
+    let result = problems;
+
+    if (filters.search) {
+      result = result.filter(p =>
+        (p.description && p.description.toLowerCase().includes(filters.search.toLowerCase())) ||
+        (p.manualLocation && p.manualLocation.toLowerCase().includes(filters.search.toLowerCase()))
+      );
+    }
+    if (filters.category !== 'All Categories') {
+      result = result.filter(p => p.category === filters.category);
+    }
+    if (filters.status !== 'All Status') {
+      result = result.filter(p => p.status === filters.status);
+    }
+
+    setFilteredProblems(result);
+  }, [filters, problems]);
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prevFilters => ({ ...prevFilters, [filterName]: value }));
+  };
+
+  const handleViewDetails = (problem) => {
+    setSelectedProblem(problem);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProblem(null);
+  };
+
   return (
     <div className="bg-white h-full rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col">
-      {/* Header */}
-      <div className="bg-white px-6 py-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-800">Recent Problems</h2>
-          <div className="flex items-center space-x-2">
-            {/* Priority Filter */}
-            <select
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              aria-label="Filter by Priority"
-            >
-              <option>All Priorities</option>
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
-            </select>
-            {/* Status Filter */}
-            <select
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              aria-label="Filter by Status"
-            >
-              <option>All Status</option>
-              <option>Open</option>
-              <option>In Progress</option>
-              <option>Resolved</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Problem List */}
-      <div className="p-4 space-y-4 overflow-y-auto">
-        {mockProblems.map((problem) => (
-          <ProblemCard key={problem.id} problem={problem} />
-        ))}
-      </div>
+      <FilterBar filters={filters} onFilterChange={handleFilterChange} />
+      
+      {isLoading && <div className="p-4 text-center">Loading issues...</div>}
+      {error && <div className="p-4 text-center text-red-500">{error}</div>}
+      {!isLoading && !error && (
+        <ProblemList problems={filteredProblems} onViewDetails={handleViewDetails} />
+      )}
+      
+      {selectedProblem && (
+        <ProblemModal problem={selectedProblem} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };
