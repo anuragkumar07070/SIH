@@ -4,6 +4,7 @@ import { FaMapPin, FaSync, FaSatellite, FaMap, FaExclamationTriangle, FaCamera }
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapComponent.css";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 // --- ⬇️ YOUR AWS CONFIGURATION ⬇️ ---
 const API_KEY = import.meta.env.MAP_API_KEY;
@@ -318,10 +319,17 @@ const fetchComplaintData = async () => {
   console.log('Fetching from:', `${API_GATEWAY_URL}/complaints`);
   
   try {
+    // Get the authentication token
+    const { idToken } = (await fetchAuthSession()).tokens ?? {};
+    if (!idToken) {
+      throw new Error("User is not authenticated");
+    }
+
     const response = await fetch(`${API_GATEWAY_URL}/complaints`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken.toString()}`, // Add this line
       },
     });
 
@@ -372,6 +380,7 @@ const fetchComplaintData = async () => {
     setIsLoading(false);
   }
 };
+
 
 const calculateGeographicCenter = (complaintsData) => {
   if (!complaintsData || complaintsData.length === 0) {

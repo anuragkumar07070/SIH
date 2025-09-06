@@ -1,18 +1,31 @@
 // sih-project/src/Components/Navbar/Navbar.jsx
 
 import React from "react";
-import { useNavigate } from 'react-router-dom'; // 1. Import the useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import { FaBell, FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 
-const Navbar = ({ signOut, user }) => {
-  const navigate = useNavigate(); // 2. Initialize the hook
+const Navbar = ({ signOut, user, userRole }) => {
+  const navigate = useNavigate();
 
-  // 3. Create a new async handler function for signing out
+  // Function to get dashboard title based on user role
+  const getDashboardTitle = (role) => {
+    const roleTitles = {
+      'SuperAdmin': 'Admin Dashboard',
+      'RoadsAdmin': 'Roads & Transportation Dashboard',
+      'ElectricityAdmin': 'Electricity Dashboard',
+      'SanitationAdmin': 'Sanitation Dashboard',
+      'WaterAdmin': 'Water & Drainage Dashboard',
+      'SafetyAdmin': 'Public Safety Dashboard',
+      'ParksAdmin': 'Parks & Recreation Dashboard'
+    };
+    
+    return roleTitles[role] || 'Dashboard';
+  };
+
   const handleSignOut = async () => {
     try {
       await signOut();
-      // On successful sign out, navigate the user to the login page
       navigate('/login');
     } catch (error) {
       console.error('Error signing out: ', error);
@@ -28,7 +41,7 @@ const Navbar = ({ signOut, user }) => {
             href="/"
             className="text-xl font-bold text-gray-800 hover:text-gray-900"
           >
-            Dashboard
+            {getDashboardTitle(userRole)}
           </a>
         </div>
 
@@ -53,7 +66,7 @@ const Navbar = ({ signOut, user }) => {
           
           {/* Logout Button */}
           <button
-            onClick={handleSignOut} // 4. Use the new handler function
+            onClick={handleSignOut}
             className="flex items-center space-x-2 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
             aria-label="Log Out"
           >
