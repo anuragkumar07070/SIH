@@ -31,6 +31,9 @@ const FilterBar = ({ filters, onFilterChange }) => {
             <option>Streetlights & Electricity</option>
             <option>Sanitation & Waste</option>
             <option>Water & Drainage</option>
+            <option>Public Safety & Hazards</option>
+            <option>Parks & Public Spaces</option>
+            <option>Miscellaneous</option>
           </select>
 
           {/* Status Filter - Updated with your exact statuses */}

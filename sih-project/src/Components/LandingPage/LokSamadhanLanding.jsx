@@ -1,3 +1,4 @@
+// sih-project/src/Components/LandingPage/LokSamadhanLanding.jsx
 import React, { useState, useEffect } from 'react';
 import { 
   MapPin, 
@@ -291,10 +292,10 @@ const LokSamadhanLanding = () => {
               Join thousands of citizens making their communities better with Lok Samadhan.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              {/* <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2">
                 <Play className="w-5 h-5" />
                 Report an Issue
-              </button>
+              </button> */}
               <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 flex items-center gap-2">
                 Learn More
                 <ArrowRight className="w-5 h-5" />

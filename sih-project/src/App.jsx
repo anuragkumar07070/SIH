@@ -1,30 +1,52 @@
-/* sih-project/src/App.jsx */
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css'; // Import the default theme
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
-import Dashboard from './Components/Dashboard';
-import awsExports from './aws-exports'; // The configuration file from Amplify CLI
+import awsExports from './aws-exports';
 import LokSamadhanLanding from './Components/LandingPage/LokSamadhanLanding';
+import Dashboard from './Components/Dashboard';
 import LoginPage from './Components/User/LoginPage';
 import SignUpPage from './Components/User/SignUpPage';
-// Configure Amplify for your entire app
-Amplify.configure(awsExports);
+import ConfirmSignUpPage from './Components/User/ConfirmSignUpPage';
+import ProtectedRoute from './Components/ProtectedRoute';
 
-// The 'signOut' and 'user' props are passed in by withAuthenticator
-function App({ signOut, user }) {
+// Override the Cognito settings from aws-exports with your new Admin Pool details
+Amplify.configure({
+  ...awsExports,
+  "aws_user_pools_id": import.meta.env.VITE_ADMIN_USER_POOL_ID,
+  "aws_user_pools_web_client_id": import.meta.env.VITE_ADMIN_USER_POOL_CLIENT_ID,
+});
+
+function App() {
   return (
-    <>
-      {/* You can pass the user and signOut function to the Dashboard 
-        if you need them there, for example, in your Navbar.
-      */}
-      <LokSamadhanLanding/>
-      {/* <Dashboard user={user} signOut={signOut} /> */}
-    </>
+    // The Authenticator.Provider makes authentication state available to all components
+    <Authenticator.Provider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LokSamadhanLanding />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/confirm-signup" element={<ConfirmSignUpPage />} />
+
+          {/* Protected Route for the Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Optional: Add a catch-all route for 404 pages */}
+          <Route path="*" element={<h1>404: Page Not Found</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </Authenticator.Provider>
   );
 }
 
-// Wrap the App component with the Authenticator.
-// This will show the login/signup UI before rendering your app.
-export default withAuthenticator(App);
+export default App;
